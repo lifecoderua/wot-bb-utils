@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const getClient = require('./app/db');
+// const getClient = require('./app/db');
 const reader = require('./app/reader');
 const wotClient = require('./app/wot');
 const Writer = require('./app/writer');
@@ -12,11 +12,11 @@ function isPlayer(playerType) {
 async function main() {
   console.log('Hello world.', process.env.TEST);
 
-  const client = await getClient();
+  // const client = await getClient();
 
   const records = await reader();
 
-  console.log(records);
+  // console.log(records);
 
   let activeRow = 0;
 
@@ -32,13 +32,14 @@ async function main() {
       Writer.playerWriter(playerStatistics);
     } else {
       const clanStatistics = await wotClient.getClanStatistics(clanLink, playerLink);
+      clanStatistics.contact = clanLink;
       // console.log(clanStatistics);
       Writer.clanWriter(clanStatistics);
     }
   }
 
 
-  await client.close();
+  // await client.close();
 }
 
 main();

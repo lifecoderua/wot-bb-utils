@@ -90,6 +90,7 @@ async function getClanStatistics(clanLink, playerLink = '') {
 
       wins_ratio_avg: Math.round(clan.wins_ratio_avg.value),
 
+      free_members: 100 - clanInfoContent.members_count,
       wins_bracket: getBracket(clan.wins_ratio_avg.value),
       valid: true,
       submitted_by_leader: playerLink.indexOf(clanInfoContent.leader_id) !== -1,

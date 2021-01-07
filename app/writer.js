@@ -31,6 +31,7 @@ function clanWriter(record) {
     columns: [
       { key: 'clan_id', header: 'clan_id' },
       { key: 'clan_tag', header: 'clan_tag' },
+      { key: 'free_members', header: 'free_members' },
       { key: 'wins_ratio_avg', header: 'wins_ratio_avg' },
       { key: 'wins_bracket', header: 'wins_bracket' },
       { key: 'valid', header: 'valid' },
@@ -38,6 +39,7 @@ function clanWriter(record) {
       { key: 'clan_name', header: 'clan_name' },
       { key: 'clan_leader_id', header: 'clan_leader_id' },
       { key: 'clan_leader_name', header: 'clan_leader_name' },
+      { key: 'contact', header: 'contact' },
     ]
   });
 
