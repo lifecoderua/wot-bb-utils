@@ -1,9 +1,16 @@
 require('dotenv').config();
 
-getClient = require('./app/db');
 
-async function main() {
+
+const getClient = require('./app/db');
+const reader = require('./app/reader');
+
+
+
+  async function main() {
   console.log('Hello world.', process.env.TEST);
+
+  await reader();
 
   const client = await getClient();
   //...
