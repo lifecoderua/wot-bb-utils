@@ -88,7 +88,7 @@ async function getClanStatistics(clanLink, playerLink = '') {
       clan_leader_id: clanInfoContent.leader_id,
       clan_leader_name: clanInfoContent.leader_name,
 
-      wins_ratio_avg: clan.wins_ratio_avg.value,
+      wins_ratio_avg: Math.round(clan.wins_ratio_avg.value),
 
       wins_bracket: getBracket(clan.wins_ratio_avg.value),
       valid: true,
@@ -100,7 +100,7 @@ async function getClanStatistics(clanLink, playerLink = '') {
     console.log('Fetch clan data failed for', clanLink);
 
     return {
-      accountId: clanLink,
+      clan_id: clanLink,
       wins_ratio_avg: 0,
       wins_bracket: 0,
       valid: false,
