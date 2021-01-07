@@ -1,0 +1,11 @@
+{
+  "name": "wot-bb21",
+  "version": "1.0.0",
+  "description": "WoT Bloggers Battle 2021 data processor utils",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
