@@ -1,5 +1,5 @@
 const client = require('axios');
-
+const getBracket = require('./brackets');
 
 function getPlayerInfo(account_id) {
   return client.get('https://api.worldoftanks.ru/wot/account/info/', {
@@ -19,15 +19,19 @@ async function getPlayerStatistics(accountLink) {
 
     const player = data.data[account_id];
 
+    const winRate = Math.round(100 * player.statistics.all.wins / player.statistics.all.battles);
+
     const stats = {
       accountId: account_id,
       nickname: player.nickname,
       allBattles: player.statistics.all.battles,
       wins: player.statistics.all.wins,
-      winrate: Math.round(100 * player.statistics.all.wins / player.statistics.all.battles),
+      wins_ratio_avg: winRate,
 
       battle_avg_xp: player.statistics.all.battle_avg_xp,
       hits_percents: player.statistics.all.hits_percents,
+
+      wins_bracket: getBracket(winRate),
       valid: true,
     };
 
@@ -37,7 +41,8 @@ async function getPlayerStatistics(accountLink) {
 
     return {
       accountId: accountLink,
-      winrate: 0,
+      wins_ratio_avg: 0,
+      wins_bracket: 0,
       valid: false,
     }
   }
@@ -85,6 +90,7 @@ async function getClanStatistics(clanLink, playerLink = '') {
 
       wins_ratio_avg: clan.wins_ratio_avg.value,
 
+      wins_bracket: getBracket(clan.wins_ratio_avg.value),
       valid: true,
       submitted_by_leader: playerLink.indexOf(clanInfoContent.leader_id) !== -1,
     }
@@ -92,6 +98,13 @@ async function getClanStatistics(clanLink, playerLink = '') {
     return statistics;
   } catch (e) {
     console.log('Fetch clan data failed for', clanLink);
+
+    return {
+      accountId: clanLink,
+      wins_ratio_avg: 0,
+      wins_bracket: 0,
+      valid: false,
+    }
   }
 }
 
