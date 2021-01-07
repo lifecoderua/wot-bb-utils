@@ -17,8 +17,6 @@ async function getPlayerStatistics(accountLink) {
 
     const {data} = await getPlayerInfo(account_id);
 
-    // console.log(data);
-
     const player = data.data[account_id];
 
     const stats = {
@@ -43,15 +41,62 @@ async function getPlayerStatistics(accountLink) {
       valid: false,
     }
   }
-
 }
 
 function getClanInfo(clan_id) {
+  return client.get('https://api.worldoftanks.ru/wot/clans/info/', {
+    params: {
+      // account_id: account_id.join(','),
+      clan_id,
+      application_id: process.env.WOT_APP_ID,
+    },
+  });
+}
 
+function getClanRating(clan_id) {
+  return client.get('https://api.worldoftanks.ru/wot/clanratings/clans/', {
+    params: {
+      // account_id: account_id.join(','),
+      clan_id,
+      application_id: process.env.WOT_APP_ID,
+    },
+  });
+}
+
+async function getClanStatistics(clanLink, playerLink = '') {
+  try {
+    const clan_id = clanLink.match(/clans\/wot\/(\d+)/)[1];
+
+    const clanInfo = await getClanInfo(clan_id);
+
+    const { data } = await getClanRating(clan_id);
+
+    const clanInfoContent = clanInfo.data.data[clan_id];
+
+    const clan = data.data[clan_id];
+
+    const statistics = {
+      clan_id,
+      clan_tag: clan.clan_tag,
+      clan_name: clan.clan_name,
+
+      clan_leader_id: clanInfoContent.leader_id,
+      clan_leader_name: clanInfoContent.leader_name,
+
+      wins_ratio_avg: clan.wins_ratio_avg.value,
+
+      valid: true,
+      submitted_by_leader: playerLink.indexOf(clanInfoContent.leader_id) !== -1,
+    }
+
+    return statistics;
+  } catch (e) {
+    console.log('Fetch clan data failed for', clanLink);
+  }
 }
 
 module.exports = {
   getPlayerInfo,
   getPlayerStatistics,
-
+  getClanStatistics,
 }

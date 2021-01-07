@@ -15,6 +15,8 @@ async function main() {
   // console.log(playerStatistics);
 
 
+  const clanStatistics = await wotClient.getClanStatistics('Discord/someuser/0000000, https://ru.wargaming.net/clans/wot/52472/. В свое время обучал игроков с помощью танковой академии, есть пару супер активных игроков, и пару людей которые готовы заниматься орг. вопросов.', 'https://worldoftanks.ru/ru/community/accounts/6123184-And66997/');
+  console.log(clanStatistics);
 
   await client.close();
 }
