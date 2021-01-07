@@ -1,5 +1,5 @@
 {
-  "name": "wot-bb21",
+  "name": "wot-bb-utils",
   "version": "1.0.0",
   "description": "WoT Bloggers Battle 2021 data processor utils",
   "main": "app.js",
