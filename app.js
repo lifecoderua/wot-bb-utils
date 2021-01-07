@@ -14,15 +14,29 @@ async function main() {
 
   const client = await getClient();
 
-  await reader();
+  const records = await reader();
 
-  const playerStatistics = await wotClient.getPlayerStatistics('https://worldoftanks.ru/ru/community/accounts/7807670-MaXiMaLs/');
-  console.log(playerStatistics);
-  Writer.playerWriter(playerStatistics);
+  console.log(records);
 
-  const clanStatistics = await wotClient.getClanStatistics('Discord/someuser/0000000, https://ru.wargaming.net/clans/wot/52472/. В свое время обучал игроков с помощью танковой академии, есть пару супер активных игроков, и пару людей которые готовы заниматься орг. вопросов.', 'https://worldoftanks.ru/ru/community/accounts/6123184-And66997/');
-  console.log(clanStatistics);
-  Writer.clanWriter(clanStatistics);
+  let activeRow = 0;
+
+  for (const record of records) {
+    const [timeCode, playerType, playerLink, clanLink, spyTest] = record;
+
+    console.log('Parsing row', activeRow++);
+    // console.log('>>', timeCode, playerType, playerLink, clanLink, spyTest);
+
+    if (isPlayer(playerType)) {
+      const playerStatistics = await wotClient.getPlayerStatistics(playerLink);
+      // console.log(playerStatistics);
+      Writer.playerWriter(playerStatistics);
+    } else {
+      const clanStatistics = await wotClient.getClanStatistics(clanLink, playerLink);
+      // console.log(clanStatistics);
+      Writer.clanWriter(clanStatistics);
+    }
+  }
+
 
   await client.close();
 }
