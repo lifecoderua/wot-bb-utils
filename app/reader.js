@@ -4,5 +4,8 @@ const parse = require('csv-parse/lib/sync');
 module.exports = async function reader(target) {
   const content = await fs.readFile(`./data/${process.env.DATA_FILE}`);
   const records = parse(content);
-  records.map( record => console.log(record) );
+
+  records.shift();
+
+  return records;
 }
