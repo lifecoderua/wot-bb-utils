@@ -1,3 +1,13 @@
 require('dotenv').config();
 
-console.log('Hello world.', process.env.TEST);
+
+getClient = require('./app/db');
+
+
+async function main() {
+  console.log('Hello world.', process.env.TEST);
+
+  await getClient();
+}
+
+main();
