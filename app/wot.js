@@ -80,6 +80,8 @@ async function getClanStatistics(clanLink, playerLink = '') {
 
     const clan = data.data[clan_id];
 
+    const roundedWinRate = Math.round(clan.wins_ratio_avg.value);
+
     const statistics = {
       clan_id,
       clan_tag: clan.clan_tag,
@@ -88,10 +90,10 @@ async function getClanStatistics(clanLink, playerLink = '') {
       clan_leader_id: clanInfoContent.leader_id,
       clan_leader_name: clanInfoContent.leader_name,
 
-      wins_ratio_avg: Math.round(clan.wins_ratio_avg.value),
+      wins_ratio_avg: roundedWinRate,
 
       free_members: 100 - clanInfoContent.members_count,
-      wins_bracket: getBracket(clan.wins_ratio_avg.value),
+      wins_bracket: getBracket(roundedWinRate),
       valid: true,
       submitted_by_leader: playerLink.indexOf(clanInfoContent.leader_id) !== -1,
     }

@@ -27,9 +27,9 @@ async function main() {
     // console.log('>>', timeCode, playerType, playerLink, clanLink, spyTest);
 
     if (isPlayer(playerType)) {
-      const playerStatistics = await wotClient.getPlayerStatistics(playerLink);
+      // const playerStatistics = await wotClient.getPlayerStatistics(playerLink);
       // console.log(playerStatistics);
-      Writer.playerWriter(playerStatistics);
+      // Writer.playerWriter(playerStatistics);
     } else {
       const clanStatistics = await wotClient.getClanStatistics(clanLink, playerLink);
       clanStatistics.contact = clanLink;
